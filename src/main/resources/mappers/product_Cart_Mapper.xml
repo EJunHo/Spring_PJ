@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<!DOCTYPE mapper
+ 	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  	 <!-- namespace="패키지명.interface명" --> 
+  	 <!-- 상품 등록 및 정보 Mapper -->
+  	<mapper namespace="com.spring_pj.LJH.dao.ProductCartDAO">
+  		<!-- 상품 리스트 출력 -->
+  		<select id="cart_List" parameterType="String" resultType="com.spring_pj.LJH.dto.ProductCartDTO">
+  			SELECT c.order_id, c.order_no, c.order_name, c.order_price, c.order_img, c.order_count, c.user_id 
+  			FROM mvc_pdcart_tbl c 
+  			JOIN mvc_pdList_tbl p 
+  			ON c.order_id = p.no 
+  			WHERE user_id=#{id}
+  		</select>
+  		<!-- 장바구니 상품 넣기 -->
+  		<insert id="product_CartAdd" parameterType="com.spring_pj.LJH.dto.ProductCartDTO">
+  			 INSERT INTO mvc_pdcart_tbl (order_no, user_id, order_id, order_name, order_img, order_price, order_count, ORDER_DATE) 
+			 VALUES((SELECT NVL(MAX(order_no)+1, 1) FROM mvc_pdcart_tbl ), #{user_id}, #{order_id}, #{order_name}, #{order_img}, #{order_price}, #{order_count}, sysdate)
+		</insert>
+		<!-- 장바구니 개별 상품 삭제 -->
+  		<delete id="product_CartDelete" parameterType="int" >
+  			DELETE FROM mvc_pdcart_tbl WHERE order_no=#{no}
+  		</delete>
+  		<!-- 장바구니 개별 상품 삭제 -->
+  		<delete id="proudct_CartDelete_All" parameterType="int">
+  			 DELETE FROM mvc_pdcart_tbl
+  		</delete>
+  	
+  	
+  	</mapper>

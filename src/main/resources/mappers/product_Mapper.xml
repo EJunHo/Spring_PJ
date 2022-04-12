@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<!DOCTYPE mapper
+ 	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  	 <!-- namespace="패키지명.interface명" --> 
+  	 <!-- 상품 등록 및 정보 Mapper -->
+  	<mapper namespace="com.spring_pj.LJH.dao.ProductDAO">
+  	
+  		<!-- 상품 수량 Paging-->
+  		<select id="product_Count" resultType="int">
+  			SELECT COUNT(*) as cnt FROM mvc_pdList_tbl
+  		</select>
+  		<!-- 상품 목록 -->
+  		<select id="product_List" parameterType="java.util.Map" resultType="com.spring_pj.LJH.dto.ProductDTO">
+	  		<![CDATA[
+	  			SELECT * 
+	                 FROM (
+	                 SELECT A.*, rownum as rn
+	               		  FROM (
+	               		  SELECT no, name, img, category, brand, content, price, count, status, indate
+	               			  FROM mvc_pdList_tbl b  
+	              			  ORDER BY no DESC 
+	              			  ) A 
+	               		  ) 
+	                 WHERE rn >= #{start} AND rn <= #{end}
+  			    ]]>
+  		</select>
+  		<!-- 상품 추가 -->
+  		<insert id="product_Insert" parameterType="com.spring_pj.LJH.dto.ProductDTO">
+  			INSERT INTO mvc_pdList_tbl (no, name, Img, category, brand, content, price, count, status, indate)
+			VALUES((SELECT NVL(MAX(No)+1, 1) FROM mvc_pdList_tbl), #{name}, #{Img} ,#{category} ,#{brand} ,#{content} ,#{price} ,#{count} ,#{status} ,sysdate )
+  		</insert>
+  		<!-- 상품 상세 -->
+  		<select id="product_Detail" parameterType="int" resultType="com.spring_pj.LJH.dto.ProductDTO">
+  			SELECT * FROM mvc_pdList_tbl WHERE no=#{no}  
+  		</select>
+  		<!-- 상품 수정 -->
+  		<update id="product_Update" parameterType="com.spring_pj.LJH.dto.ProductDTO">
+  			 UPDATE mvc_pdList_tbl SET name= #{name}, img=#{Img}, category=#{category}, brand=#{brand}, content=#{content}, price=#{price}, count=#{count}, status=#{status} WHERE no=#{no} 
+  		</update>
+  		<!-- 상품 삭제 -->
+  		<delete id="product_Delete" parameterType="int">
+  			DELETE mvc_pdList_tbl WHERE no=#{no}  
+  		</delete>
+  		<!-- 결산 차트용 -->
+ 		<select id="product_Account" resultType="com.spring_pj.LJH.dto.ConfrimOrderDTO" >
+	  		SELECT * FROM day_view
+  		</select> 
+  		<!-- 결산 카테고리용 -->	
+  		<select id="product_Account_category" resultType="com.spring_pj.LJH.dto.ConfrimOrderDTO">
+  			SELECT * FROM cate_view
+  		</select>
+  		<!-- 
+  		<select id="count_Increase" resultType="int" parameterType="int">
+  			SELECT count FROM mvc_pdlist_tbl WHERE no=#{no}
+  		</select>
+  		<update id="count_Increase" parameterType="int">
+  			UPDATE mvc_pdlist_tbl SET count=#{count} WHERE no=#{no}
+  		</update>
+  		 -->
+  		
+  			
+  
+  </mapper>
+  
+  	
+  		
+  		
+  
+  	 

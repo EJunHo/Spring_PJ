@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper
+ 	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  	 
+<!-- 회원 Mapper -->  	 
+<mapper namespace="com.spring_pj.LJH.dao.MemberDAO">
+	
+	<!-- 회원 중복 점검 -->
+	<select id="idCheck" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM member_list_tbl WHERE id=#{id}
+	</select>
+	
+	<!-- 회원 가입 -->
+	<insert id="insertMember" parameterType="com.spring_pj.LJH.dto.MemberDTO">
+		INSERT INTO member_list_tbl(id, password, name, birthday, address, hp, email, regDate, key) 
+	 	VALUES(#{id}, #{password}, #{name}, #{birthday}, #{address}, #{hp}, #{email}, sysdate, #{key})
+	</insert>	
+	
+	<!-- 아이디 패스워드 중복 체크 -->
+	<!--<select id="idPasswordChk" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(*) FROM member_list_tbl WHERE id=#{strId} AND password=#{strPassword}
+	</select> -->
+	
+	<!-- 회원 정보 상세 -->
+	<select id="getMemberDetail" resultType="com.spring_pj.LJH.dto.MemberDTO" parameterType="String">
+		SELECT * FROM member_list_tbl WHERE id=#{strId}
+	</select>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="updateMember" parameterType="com.spring_pj.LJH.dto.MemberDTO">
+		UPDATE member_list_tbl SET password=#{password}, name=#{name}, birthday=#{birthday}, address=#{address}, hp=#{hp}, email=#{email} 
+		WHERE id=#{id}
+	</update>
+	
+	<!-- 회원 정보 삭제 -->
+	<delete id="deleteMember" parameterType="String">
+		DELETE FROM member_list_tbl WHERE id=#{strId}
+	</delete>
+	
+	<!-- security 추가 mapper  -->
+	
+	 <select id="selectKey" parameterType="String" resultType="int"> 
+      SELECT COUNT(*) FROM member_list_tbl WHERE key=#{key}
+  	 </select>
+  	 
+  	<update id="updateGrade" parameterType="String">
+		UPDATE member_list_tbl 
+		SET enabled = 1
+		WHERE key=#{key}
+  	</update>
+	
+	<!-- security UserLoginSuccessHandler에서 호출 -->
+ 	<select id="authorityChk" resultType="String">
+ 		SELECT authority FROM member_list_tbl WHERE id=#{id}
+ 	</select>
+  	
+  	<!-- security pwdCheck -->
+  	<select id="pwdCheck" parameterType="String" resultType="String">
+ 		SELECT password FROM member_list_tbl WHERE id=#{strId}
+ 	</select>
+ 	<!-- security - 이메일 인증시 호출 UserAuthenticationService getCustomerDetail 수정-->
+ 	<select id="selectCustomer" parameterType="String" resultType="com.spring_pj.LJH.dto.MemberDTO">
+ 		SELECT * FROM member_list_tbl WHERE id=#{strId}
+ 	</select>
+ 	
+	
+
+</mapper>

@@ -1,0 +1,37 @@
+@charset "UTF-8";
+/* 왼쪽 메뉴바 */
+#left {
+	width: 12%;
+	background: #404040;
+	height: 100%;
+	border-radius: 10px;
+	float:left;
+}
+
+.left_inside {
+	background: whitesmoke;
+	margin: 0 0 0 0;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+	box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.2);
+   
+}
+
+.menubarL {
+	margin-left: -40px;
+}
+
+
+
+.menubarL li {
+	list-style: none;
+	position: relative;
+	font-size:14px;
+	text-align: center;
+
+	
+}
+
+.order_menu li {
+	right:15px;
+}

@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+
+/* 회원가입 CSS */
+/*  여러번 반복되는 문장이면 .클래스 */
+/* 한번만 사용되는 문장이면 #, id로 통일 */
+#container {
+	/* width : 100; */
+	margin : 0 auto;
+	
+}
+
+#section1 {
+	padding: 10px 20px 20px 0; 
+	border-bottom : 5px solid #b1aeb7;
+}
+
+#section2 {
+		padding: 10px 20px 20px 0; 
+	border-bottom : 5px solid #b1aeb7;
+	
+}
+
+#s2_inner {
+	width : 100%;
+	display : flex;
+	justify-content: center;
+}
+
+.join {
+	display : flex;
+	justify-content : center;
+	align-items : center;
+	max-width : auto;
+	margin : 40px 10px;
+	height : auto;
+}
+
+.join th {
+	width : 120px;
+	height : 60px;
+	font-size : 15px;
+	font-weight : bold;
+	text-align : left;
+	padding-right : 10px;
+	padding-left : 20px;
+	border-bottom : 1px solid #ccc;
+	background : whitesmoke;
+	margin-right : 5px;
+}
+
+.join td {
+	padding : 10px 0 10px 10px;
+	border-bottom : 1px solid #ccc;
+}
+
+input {
+	font-family : 'SEABANG_Gothic_Regular';
+	padding : 5px 10px;
+}
+
+.btn_input {
+	float:right;
+	align-content:space-between;
+}
+

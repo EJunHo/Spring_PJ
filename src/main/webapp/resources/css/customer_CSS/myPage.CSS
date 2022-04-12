@@ -1,0 +1,30 @@
+.sec_title {
+    margin:0 auto;
+    width:300px;
+    margin-top: 100px;
+    
+}
+
+.se2_table {
+    width:50%;
+    height:150px;
+    border:1px solid black;
+
+}
+i{
+    margin-left: 50px;
+}
+
+span2 {
+    color:red;
+    font-weight: bold;
+}
+
+span1 {
+    font-weight: bold;
+}
+
+
+ a {
+	text-decoration: none;
+}

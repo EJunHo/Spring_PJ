@@ -1,0 +1,32 @@
+.search_field {
+    border:1px double grey;
+    border-radius: 5px;
+    
+    margin:10px 10px 10px 10px;
+}
+
+#search_date {
+    font-size: 14px;
+    height: 30px;
+}
+
+#search_title {
+    font-size:14px;
+    height: 30px;
+}
+
+#search_text {
+    font-size:14px;
+    height: 30px;
+}
+
+#search_btn {
+    font-size:14px;
+    height: 28px;
+    margin:1px
+}
+
+#search_cal {
+    font-size:14px;
+    height: 28px;
+}

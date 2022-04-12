@@ -1,0 +1,168 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'SEBANG_Gothic_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SEBANG_Gothic_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#container {
+	width: 100%;
+	margin: 0 auto;
+}
+
+#contents {
+	max-width: 1240px;
+	min-width: 1240px;
+	width: 100%;
+	margin: 0 auto;
+	min-height: 800px;
+}
+
+#section2 {
+	display: flex;
+	justify-content: space-between;
+}
+
+hr {
+    border-bottom-width: thick;
+}
+
+
+
+.menubarL li {
+	list-style: none;
+	align: left;
+}
+
+.menubarL li a {
+	color: black;
+	text-decoration: none;
+}
+
+
+/* 오른쪽 내용 */
+/* list test start */
+.list {
+  margin:0 auto;
+}
+.list li{
+  margin:0 0 30px 0;
+  list-style-type:none;
+  display:inline-block;
+
+}
+.list a {
+  display:block;
+  padding:8px 20px;
+  color:#333;
+  text-decoration:none;
+  font-size:16px;
+  font-weight:bold;
+ 
+}
+.list a:hover{
+  
+  color:#D5D5D5;
+ 
+}
+.list ul { 
+  margin:0;
+  padding:0;
+  list-style-type:none;
+
+}
+	
+/* list test end */
+
+#right {
+	width: 100%;
+	margin:0 auto;
+	margin-top:100px;
+}
+
+.table_div {
+	margin-top: 10px;
+	margin:0 auto;
+	margin-right:300px;
+}
+
+.table_div table {
+    border-collapse: collapse;
+}
+
+.table_div table th, td {
+	text-align: center;
+	font-family: 'SEBANG_Gothic_Regular';
+	height: 40px;
+	border-bottom: 1px solid black;
+} 
+
+.table_div table th {
+	background: #353535;
+	font-size:14px;
+	color:white;
+}
+
+.table_div table td {
+	background: #FDFDFD;
+}
+
+#right { 
+   text-align: -webkit-center;
+}
+
+.inputButton {
+	font-family: 'SEBANG_Gothic_Regular';
+	background-color: #FDE3E9;
+	font-size: 16px;
+	
+}
+
+.input {
+	 font-family: 'SEBANG_Gothic_Regular';
+	
+}
+
+/* page 삭제 button start */
+.button {
+	left:430px;
+	position:relative;
+	margin: 10px 0 0 0;
+	
+}
+.button li {
+	list-style: none;
+	display: inline-block;
+	font-size: 15px;
+}
+
+
+/* page 삭제 button end */
+.page-num li {
+	display: inline-block;
+	list-style: none;;
+	margin: 20px 20px 0 0;
+	font-size: 16px;
+	font-weight: bold;
+}
+.page-num a {
+	text-decoration: none;;
+}
+
+
+/* inputbox */
+.inputbox {
+	font-size: 15px;
+	width: 150px;
+	padding: 20px 20px 20px 0;
+
+}
+.total {
+	border:1px solid black;
+	width: 400px;
+	padding:20px;
+	
+	
+}

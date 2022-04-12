@@ -1,0 +1,109 @@
+#sp-content {
+    position: relative;
+}
+
+
+
+
+.helpbox {
+    text-align: center;
+    position: relative;
+    z-index: 11;
+}
+
+.helpbox > ul {
+    font-size: 0;
+    display: table;
+    width:100%;
+}
+
+.helpbox > ul > li[bg] {
+    background: #f9f9f9;
+}
+
+
+.topbox h1{
+    text-align: center;
+    padding : 100px 0 30px 0;
+}
+.topbox h5 {
+    text-align: center;
+    padding: 10px 0 50px 0;
+}
+
+
+.bottombox > ul > li[grid="50"]{
+    width:50%;
+}
+
+.bottombox > ul > li ~ li {
+    border-left: 0;
+}
+
+
+.runtime {
+    color:darkgrey;
+    text-align: left;
+}
+.bottombox {
+    width: 68%;
+    min-width: 900px;
+    max-width: 1920px;
+    margin: 0 auto;
+   
+}
+.bottombox ul {
+    margin: 0 auto;
+    display: table;
+    width: 100%;
+}
+
+.bottombox li {
+    list-style: none;
+}
+
+.bottombox > ul > li {
+    font-size:13px;
+    padding:50px;
+    border:1px solid gray;
+    display: table-cell;
+    vertical-align: top;
+}
+.bottombox h3 {
+    font-size: 20px;
+    padding : 0 0 10px 0;
+  
+}
+
+h1, h3{
+    text-align: left;
+    margin: 0;
+}
+
+.phone {
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 50px;
+    text-align: left;
+}
+.board_list {
+    font-size: 18px;
+    text-align: left;
+
+}
+
+
+.serch_tabs li {
+    font-size: 13px;
+    color:#aaa;
+    padding: 0 0 2px 0;
+    margin: 0 0 8px 0;
+    cursor:pointer;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+
+}
+.serch_tabs ul li ~ li {
+    margin-left: 47px;
+}

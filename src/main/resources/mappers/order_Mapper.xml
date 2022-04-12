@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<!DOCTYPE mapper
+ 	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  		
+  	 <mapper namespace="com.spring_pj.LJH.dao.ConfrimOrderDAO">
+  	 	<!-- 고객 구매 제품 주문 -->
+		<update id="confirm_Order_Add" parameterType="java.util.List">
+  			<foreach collection="list" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" " item="item" index="index">
+ 			INTO mvc_order_tbl (delivery_no, confirm_id, confirm_name, confirm_price, confirm_count, confirm_address, confirm_phone, confirm_state, pd_no ,confirm_date)
+			VALUES
+			((SELECT NVL(MAX(delivery_no)+1, 1) FROM mvc_order_tbl ),#{item.confirm_id},#{item.confirm_name},#{item.confirm_price},#{item.confirm_count},#{item.confirm_address},#{item.confirm_phone},#{item.confirm_state},#{item.pd_no},sysdate)
+  			</foreach>	
+  		</update>
+		
+	  	<!-- 페이징 처리 카운트  -->
+	  	<select id="order_Count" resultType="int">
+	  		SELECT COUNT(*) as cnt FROM MVC_ORDER_TBL
+	  	</select>
+	  	
+	  	<!-- Manager 전체 상품 구매 리스트 -->	
+  		<select id="confirm_Order_List" resultType="com.spring_pj.LJH.dto.ConfrimOrderDTO" parameterType="java.util.Map">
+  			<![CDATA[
+	  			SELECT * 
+	        	       FROM (
+	        	       SELECT A.*, rownum as rn 
+	        	      	 FROM (
+	        	     	  SELECT delivery_no, confirm_name, confirm_price, confirm_count, confirm_state, confirm_date, pd_no 
+	        	      		  FROM MVC_ORDER_TBL b  
+	        	    		  WHERE show='y' 
+	        	          ORDER BY delivery_no DESC
+	        	    	   ) A 
+	        	       ) 
+       	       WHERE rn >= #{start} AND rn <= #{end}
+   	        ]]>
+  		</select>
+  		<!-- Customer 특정 고객 상품 구매 리스트 -->	
+  		<select id="private_Order_List" resultType="com.spring_pj.LJH.dto.ConfrimOrderDTO" parameterType="java.util.Map">
+  			<![CDATA[
+	  			SELECT * 
+	        	     FROM (
+		        	     SELECT A.*, rownum as rn   
+			        	     FROM (
+				        	     SELECT delivery_no, confirm_name, confirm_price, confirm_count, confirm_state, confirm_date, pd_no 
+				        	     FROM MVC_ORDER_TBL b  
+			        	     WHERE confirm_id=#{confirm_id}
+			        	     ORDER BY delivery_no DESC 
+			        	     ) A 
+		        	     ) 
+		        	 WHERE rn >= #{start} AND rn <= #{end}
+  			]]>
+  		</select>
+  		<!-- Manager 구매 요청 승인 -->		
+  		<update id="approve_Order" parameterType="int">
+  			UPDATE mvc_order_tbl SET confirm_state='제품준비중' WHERE delivery_no=#{delivery_no} 
+  		</update>
+  		<!-- Manager 구매 요청 승인 -->		
+  		<update id="cancle_Order" parameterType="int">
+  			UPDATE mvc_order_tbl SET confirm_state='제품준비중' WHERE delivery_no=#{delivery_no}
+  		</update>
+  		<!-- Customer - 상품 환불  -->		
+  		<update id="order_refund" parameterType="int">
+  			 UPDATE mvc_order_tbl SET confirm_state='환불요청' WHERE delivery_no=#{delivery_no}
+  		</update>
+  		<!-- Customer - 구매 취소  -->		
+  		<delete id="order_cancle" parameterType="int">
+  			DELETE FROM mvc_order_tbl WHERE delivery_no=#{delivery_no}
+  		</delete>
+  		<!-- Manager - 환불 리스트  -->		
+  		<select id="refund_list" resultType="com.spring_pj.LJH.dto.ConfrimOrderDTO" parameterType="java.util.Map">
+	  		<![CDATA[
+	  			SELECT * 
+	        	   FROM (
+		        	   SELECT A.*, rownum as rn   
+			        	   FROM (
+				        	   SELECT delivery_no, confirm_name, confirm_price, confirm_count, confirm_state, confirm_date, pd_no
+				        	   FROM MVC_ORDER_TBL b 
+			        	  	   WHERE confirm_state='환불요청' 
+			        	  	   ORDER BY delivery_no DESC
+		        	   ) A 
+	        	   ) 
+		        WHERE rn >= #{start} AND rn <= #{end}
+	  		]]>
+  		</select>
+  		<!-- Manager - 결산 리스트  -->		
+  		<select id="account_list" parameterType="java.util.Map" resultType="com.spring_pj.LJH.dto.ConfrimOrderDTO">
+  			<![CDATA[
+	  			SELECT * 
+	        	   FROM (
+		        	   SELECT A.*, rownum as rn   
+			        	   FROM (
+				        	   SELECT delivery_no, confirm_name, confirm_price, confirm_count, confirm_state, confirm_date, pd_no
+				        	   FROM MVC_ORDER_TBL b 
+			        	  	   WHERE confirm_state='제품준비중' 
+			        	  	   ORDER BY delivery_no DESC
+		        	   ) A 
+	        	   ) 
+		        WHERE rn >= #{start} AND rn <= #{end}
+	  		]]>
+  		</select>
+  	 </mapper>
+  	 
+  	 
+  	 

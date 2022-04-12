@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ 	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  	 <!-- namespace="패키지명.interface명" --> 
+  	 <!-- 상품 등록 및 정보 Mapper -->
+  	<mapper namespace="com.spring_pj.LJH.dao.BoardDAO">
+  		<!-- 페이징 카운터 -->
+  		<select id="board_count" resultType="int">
+			SELECT COUNT(*) as cnt FROM board_list_tbl 			
+  		</select>
+  		<!-- 게시판 리스트 -->
+  		<select id="board_List" parameterType="java.util.Map" resultType="com.spring_pj.LJH.dto.boardDTO">
+  				<![CDATA[
+  				SELECT * 
+	                    FROM (
+		                    SELECT A.*, rownum as rn   
+			                    FROM (
+				                    SELECT num, title, content, writer, password, redCnt, indate,
+					                    (SELECT COUNT(*) FROM board_commentlist_tbl 
+					                    WHERE board_num = b.num) comment_count 
+					                    FROM board_list_tbl b 
+					                    WHERE show='y'   
+				                    ORDER BY num DESC 
+			                    ) A 
+		                    ) 
+                WHERE rn >= #{start} AND rn <= #{end}
+		      	]]>               
+  		</select>
+  		<!-- 게시글 추가 -->
+  		<insert id="board_Insert" parameterType="com.spring_pj.LJH.dto.boardDTO">
+  			 INSERT INTO board_list_tbl(num, title, content, writer, password, redCnt, indate)
+			 VALUES((SELECT NVL(MAX(num)+1, 1) FROM board_list_tbl), #{title}, #{content}, #{writer}, #{password}, 0, sysdate)
+  		</insert>
+  		<!-- 게시글 상세 페이지 -->
+  		<select id="board_Detail" parameterType="int" resultType="com.spring_pj.LJH.dto.boardDTO">
+  			SELECT * FROM board_list_tbl WHERE num=#{num}
+  		</select>
+  		<!-- 조회수 증가 -->
+  		<update id="board_Read_Count" parameterType="int">
+  			UPDATE board_list_tbl SET redCnt=redCnt+1 WHERE num=#{num}
+  		</update>
+  		<!-- 게시글 비밀번호 체크 -->
+  		<select id="board_password" parameterType="java.util.Map" resultType="String">
+  			SELECT password FROM board_list_tbl WHERE num=#{num} AND password=#{password}
+  		</select>
+  		<!-- 게시글 수정 -->
+  		<update id="board_Update" parameterType="com.spring_pj.LJH.dto.boardDTO">
+  			UPDATE board_list_tbl SET title=#{title}, content=#{content}, writer=#{writer}, password=#{password} WHERE num=#{num}
+  		</update>
+  		<!-- 게시글 삭제 -->
+  		<delete id="board_Delete" parameterType="int">
+  			UPDATE board_list_tbl SET show='n' WHERE num=#{num}
+  		</delete>
+  		<!-- 댓글 입력 -->
+  		<insert id="board_Comment_Insert" parameterType="com.spring_pj.LJH.dto.commentDTO">
+  			INSERT INTO board_commentlist_tbl (comment_num, board_num, writer, console, comment_date)
+			VALUES((SELECT NVL(MAX(comment_num)+1, 1) FROM board_commentlist_tbl ), #{board_num}, #{writer}, #{console}, sysdate)
+  		</insert>
+  		<!-- 댓글 리스트 -->
+		<select id="board_comment_List" resultType="com.spring_pj.LJH.dto.commentDTO" parameterType="java.util.List">
+			SELECT * FROM board_commentlist_tbl WHERE board_num=#{num}
+		</select>		
+  	</mapper>
